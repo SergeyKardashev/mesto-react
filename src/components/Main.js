@@ -7,10 +7,14 @@ function Main() {
       // в зависимости от массива зависимостей в конце эффекта
       console.log("тело эффекта");
       const avaBtn = document.querySelector(".profile__avatar-edit-btn");
-      console.log(avaBtn);
-      avaBtn.addEventListener("click", () => {
-        handleEditAvatarClick();
-      });
+      const profileBtn = document.querySelector(".profile__edit-btn");
+      const addBtn = document.querySelector(".profile__add-place-btn");
+      // console.log(avaBtn);
+      // console.log(profileBtn);
+      // console.log(addBtn);
+      avaBtn.addEventListener("click", handleEditAvatarClick);
+      profileBtn.addEventListener("click", handleEditProfileClick);
+      addBtn.addEventListener("click", handleAddPlaceClick);
       return () => {
         console.log("что делать при размонтировании");
       };
@@ -28,10 +32,14 @@ function Main() {
 
   function handleEditProfileClick() {
     console.log("ProfileClick");
+    const popupProfile = document.querySelector(".popup_type_user-profile");
+    popupProfile.classList.add("popup_opened");
   }
 
-  function handleAddPlaceClick(params) {
+  function handleAddPlaceClick() {
     console.log("AddPlaceClick");
+    const popupAddPlace = document.querySelector(".popup_type_new-place");
+    popupAddPlace.classList.add("popup_opened");
   }
 
   return (
