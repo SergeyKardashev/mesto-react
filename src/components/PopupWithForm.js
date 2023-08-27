@@ -1,18 +1,18 @@
 import React from "react";
+import { useState } from "react";
 
 function PopupWithForm(props) {
-  //
+
   return (
-    <div className={`popup popup_type_${props.name}`}>
+    <div className={`popup popup_type_${props.name} ${props.isOpen===true && "popup_opened"}`}>
       <div className="popup__container">
-        <button className="popup__close-button" type="button"></button>
+        <button className="popup__close-button" type="button" onClick={props.onClose}></button>
         <h2 className="popup__heading">{props.title}</h2>
-        {/* заголовок окна / формы передавать в пропсах. Было "Редактировать профиль" */}
-        <form className="popup__form" name={`${this.props.name}-form`} noValidate>
+        <form className="popup__form" name={`${props.name}-form`} noValidate>
+            
           {props.children}
-          <button className="popup__submit-button" type="submit">
-            Сохранить
-          </button>
+          
+          <button className="popup__submit-button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
