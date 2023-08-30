@@ -3,7 +3,6 @@ class Api {
     this.options = options;
     this.baseUrl = options.baseUrl;
   }
-  // _request(endpoint, options) {return fetch(`${this.baseUrl}${endpoint}`, options).then(this._checkResponse);}
 
   _checkResponse(res) {
     if (!res.ok) {
@@ -11,10 +10,8 @@ class Api {
     }
     return res.json(); // тут проверка ответа
   }
-  // альтернативный метод с использованием метода request, который закоментил выше
-  // setInitialUserInfo() {return this._request(`/users/me`, {method: "GET", headers: this.options.headers, });}
 
-  setInitialUserInfo() {
+  getInitialUserInfo() {
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "GET",
       headers: this.options.headers,
@@ -58,7 +55,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  delete(cardId) {
+  deleteCard(cardId) {
     return fetch(`${this.options.baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this.options.headers,
@@ -73,7 +70,6 @@ class Api {
     }).then(this._checkResponse);
   }
 }
-
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-72",
