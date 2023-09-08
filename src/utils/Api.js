@@ -11,7 +11,7 @@ class Api {
     return res.json(); // тут проверка ответа
   }
 
-  getInitialUserInfo() {
+  getUserInfo() {
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "GET",
       headers: this.options.headers,
@@ -25,18 +25,32 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  addLike(card) {
-    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-      method: "PUT",
-      headers: this.options.headers,
-    }).then(this._checkResponse);
-  }
+  // addLike(card) {
+  //   return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
+  //     method: "PUT",
+  //     headers: this.options.headers,
+  //   }).then(this._checkResponse);
+  // }
 
-  removeLike(card) {
-    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-      method: "DELETE",
-      headers: this.options.headers,
-    }).then(this._checkResponse);
+  // removeLike(card) {
+  //   return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
+  //     method: "DELETE",
+  //     headers: this.options.headers,
+  //   }).then(this._checkResponse);
+  // }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked === true) {
+      return fetch(`${this.options.baseUrl}/cards/${cardId}/likes`, {
+        method: "PUT",
+        headers: this.options.headers,
+      }).then(this._checkResponse);
+    } else {
+      return fetch(`${this.options.baseUrl}/cards/${cardId}/likes`, {
+        method: "DELETE",
+        headers: this.options.headers,
+      }).then(this._checkResponse);
+    }
   }
 
   editProfile(inputValues) {

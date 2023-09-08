@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import api from "../utils/Api";
 import Card from "./Card";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props;
+  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, setCards, onCardDelete } = props;
 
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState(``);
-  const [cards, setCards] = useState([]);
+  // const [userName, setUserName] = useState("");
+  // const [userDescription, setUserDescription] = useState("");
+  // const [userAvatar, setUserAvatar] = useState(``);
+  // const [cards, setCards] = useState([]);
+
+  // подписываюсь на контекст пользователя.
+  const currentUser = React.useContext(CurrentUserContext);
+  // console.log(currentUser);
 
   React.useEffect(() => {
-    const promisedUserInfo = api.getInitialUserInfo();
     const promisedInitialCards = api.getInitialCards();
+    // const promisedUserInfo = api.getInitialUserInfo();
 
-    Promise.all([promisedUserInfo, promisedInitialCards])
-      .then(([initialUserInfo, initialCards]) => {
+    Promise.all([promisedInitialCards])
+      .then(([initialCards]) => {
+        // Promise.all([promisedUserInfo, promisedInitialCards])
+        // .then(([initialUserInfo, initialCards]) => {
         setCards(initialCards);
-        setUserName(initialUserInfo.name);
-        setUserDescription(initialUserInfo.about);
-        setUserAvatar(initialUserInfo.avatar);
+        // setUserName(initialUserInfo.name);
+        // setUserDescription(initialUserInfo.about);
+        // setUserAvatar(initialUserInfo.avatar);
       })
       .catch((err) => {
         console.error(err);
@@ -36,17 +43,17 @@ function Main(props) {
             type="button"
             aria-label="обновить аватар"
             onClick={onEditAvatar}
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${currentUser.avatar})` }}
           ></button>
 
           {/* <!-- текстовая часть профиля --> */}
           <div className="profile__txt">
             {/* <!-- обертка имени и кнопки --> */}
             <div className="profile__name-wrap">
-              <h1 className="profile__name">{userName}</h1>
+              <h1 className="profile__name">{currentUser.name}</h1>
               <button className="profile__edit-btn" type="button" onClick={onEditProfile}></button>
             </div>
-            <p className="profile__about">{userDescription}</p>
+            <p className="profile__about">{currentUser.about}</p>
           </div>
         </div>
         {/* <!-- button add photo --> */}
@@ -55,7 +62,15 @@ function Main(props) {
 
       <section className="gallery">
         {cards.map((card) => {
-          return <Card card={card} key={card._id} onCardClick={onCardClick} />;
+          return (
+            <Card
+              card={card}
+              key={card._id}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
+            />
+          );
         })}
       </section>
     </main>
