@@ -7,6 +7,8 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { useState } from "react";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 // импортирую объект контекста
 import CurrentUserContext from "../contexts/CurrentUserContext";
@@ -37,6 +39,7 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card);
   }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -54,11 +57,6 @@ function App() {
     });
   }
 
-  // function handleCardDelete(card) {
-  //   api.deleteCard(card._id);
-  //   // тут нужно размонтировать компонент Card внутри метода then() ?
-  // }
-
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
@@ -68,6 +66,27 @@ function App() {
         });
         setCards(filteredCards);
       })
+      .catch(console.error);
+  }
+
+  function handleUpdateUser(userData) {
+    api
+      .setUserInfo(userData)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch(console.error);
+  }
+
+  function handleUpdateAvatar(avatarData) {
+    api
+      .setUserAvatar(avatarData)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      // обновлять аватар локально после завершения запроса
       .catch(console.error);
   }
 
@@ -87,39 +106,11 @@ function App() {
         />
         <Footer />
       </div>
-      <PopupWithForm
-        name="profile-form"
-        title="Редактировать профиль"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        buttonLabel="Сохранить"
-        children={
-          <>
-            <input
-              className="popup__input popup__input_type_user-name"
-              id="user-name"
-              name="name"
-              type="text"
-              placeholder="Имя"
-              minLength="2"
-              maxLength="40"
-              required
-            />
-            <span className="user-name-input-error popup__error"></span>
-            <input
-              className="popup__input popup__input_type_user-about"
-              id="user-about"
-              name="about"
-              type="text"
-              placeholder="Обо мне"
-              minLength="2"
-              maxLength="200"
-              required
-            />
-            <span className="user-about-input-error popup__error"></span>
-          </>
-        }
-      />
+
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+
       <PopupWithForm
         name="add-place-form"
         title="Новое место"
@@ -148,26 +139,6 @@ function App() {
               required
             />
             <span className="place-url-input-error popup__error"></span>
-          </>
-        }
-      />
-      <PopupWithForm
-        name="avatar-form"
-        title="Обновить аватар"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        buttonLabel="Сохранить"
-        children={
-          <>
-            <input
-              className="popup__input popup__input_type_avatar"
-              id="avatar"
-              name="avatar"
-              type="url"
-              placeholder="Ссылка на изображение"
-              required
-            />
-            <span className="avatar-input-error popup__error"></span>
           </>
         }
       />

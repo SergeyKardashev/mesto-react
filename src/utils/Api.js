@@ -25,20 +25,6 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  // addLike(card) {
-  //   return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-  //     method: "PUT",
-  //     headers: this.options.headers,
-  //   }).then(this._checkResponse);
-  // }
-
-  // removeLike(card) {
-  //   return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-  //     method: "DELETE",
-  //     headers: this.options.headers,
-  //   }).then(this._checkResponse);
-  // }
-
   changeLikeCardStatus(cardId, isLiked) {
     if (isLiked === true) {
       return fetch(`${this.options.baseUrl}/cards/${cardId}/likes`, {
@@ -53,7 +39,7 @@ class Api {
     }
   }
 
-  editProfile(inputValues) {
+  setUserInfo(inputValues) {
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.options.headers,
@@ -76,7 +62,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  avatarEdit(avatar) {
+  setUserAvatar(avatar) {
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.options.headers,
