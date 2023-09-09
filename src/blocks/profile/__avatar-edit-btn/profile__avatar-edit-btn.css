@@ -6,7 +6,8 @@
   margin-bottom: 50px;
   border-radius: 60px;
   border: none;
-  background: url();
+  /* background: url(); */
+  /* закомментил фон чтобы не ругался реакт при сборке */
   background-position: center;
   background-size: cover;
   cursor: pointer;

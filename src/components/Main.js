@@ -1,37 +1,12 @@
-import React, { useState } from "react";
-import api from "../utils/Api";
+import React from "react";
 import Card from "./Card";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, setCards, onCardDelete } = props;
-
-  // const [userName, setUserName] = useState("");
-  // const [userDescription, setUserDescription] = useState("");
-  // const [userAvatar, setUserAvatar] = useState(``);
-  // const [cards, setCards] = useState([]);
+  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, onCardDelete } = props;
 
   // подписываюсь на контекст пользователя.
   const currentUser = React.useContext(CurrentUserContext);
-  // console.log(currentUser);
-
-  React.useEffect(() => {
-    const promisedInitialCards = api.getInitialCards();
-    // const promisedUserInfo = api.getInitialUserInfo();
-
-    Promise.all([promisedInitialCards])
-      .then(([initialCards]) => {
-        // Promise.all([promisedUserInfo, promisedInitialCards])
-        // .then(([initialUserInfo, initialCards]) => {
-        setCards(initialCards);
-        // setUserName(initialUserInfo.name);
-        // setUserDescription(initialUserInfo.about);
-        // setUserAvatar(initialUserInfo.avatar);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   return (
     <main className="main">

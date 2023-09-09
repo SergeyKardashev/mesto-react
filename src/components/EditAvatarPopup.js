@@ -4,14 +4,12 @@ import PopupWithForm from "./PopupWithForm";
 function EditAvatarPopup(props) {
   const { onClose, isOpen, onUpdateAvatar } = props;
 
-  // записываю реф - заношу объект, возвращаемый хуком, в переменную
-  const avatarRef = React.useRef();
+  const avatarRef = React.useRef(); // записываю реф - заношу объект, возвращаемый хуком, в переменную
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    // использую реф для получения значения инпута
-    onUpdateAvatar({ avatar: avatarRef.current.value });
+    onUpdateAvatar({ avatar: avatarRef.current.value }); // использую реф для получения значения инпута
   }
 
   return (

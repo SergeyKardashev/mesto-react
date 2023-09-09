@@ -6,18 +6,14 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 function EditProfilePopup(props) {
   const { isOpen, onClose, onUpdateUser } = props;
 
-  // стейт-переменные name и description обновляются в двух случаях:
-  // 1) при изменении контекста (текущий юзер)
-  // 2) при изменении значения полей ввода (ввод данных в форму или правка)
-
+  // стейт-переменные name и description обновляются в 2 случаях:
+  // 1) при изменении контекста currentUser; 2) при изменении значения полей ввода (ввод/правка)
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  // Подписка на контекст
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext); // Подписка на контекст
 
-  // После загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
+  // После загрузки текущего юзера из API его данные будут использованы в управляемых компонентах.
   // Изменение контекста (текущий юзер) обновляет стейт-переменные name и description
 
   React.useEffect(() => {
@@ -25,23 +21,18 @@ function EditProfilePopup(props) {
     setDescription(currentUser.about);
   }, [currentUser]);
 
-  // Обработчик изменения инпута name обновляет стейт-переменную name
+  // Обработчики изменения инпутов name и about обновляют стейт-переменные name и Description
   function handleNameChange(e) {
     setName(e.target.value);
   }
-  // e => setFirstName(e.target.value)
-
-  // Обработчик изменения инпута about обновляет стейт-переменную Description
   function handleDescriptionChange(e) {
     setDescription(e.target.value);
   }
 
   function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
 
-    // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({ name, about: description });
+    onUpdateUser({ name, about: description }); // Передаю значения управляемых компонентов во внешний обработчик
   }
 
   return (

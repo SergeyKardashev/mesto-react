@@ -28,4 +28,4 @@
 
 - [Ссылка на проект на GitHub Pages](https://sergeykardashev.github.io/mesto-react/)
 
-Обновлено 2023-08-30 at 17:17 +7GMT
+Обновлено 2023-09-09 at 14:14 +7GMT

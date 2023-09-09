@@ -2,20 +2,16 @@ import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  //
-  // подписываюсь на контекст currentUser
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext); // подписываюсь на контекст currentUser
 
   const isOwn = card.owner._id === currentUser._id;
   const isLIked = card.likes.some((i) => i._id === currentUser._id);
 
   const { name: cardName, link: cardLink } = card;
 
-  // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  const cardLikes = card.likes.length;
+  const cardLikes = card.likes.length; // Определяю, есть ли у карточки лайк юзера
 
-  // Создаём переменную, которую после зададим в `className` для кнопки лайка
-  const cardLikeButtonClassName = `gallery__like ${isLIked && "gallery__like_active"}`;
+  const cardLikeButtonClassName = `gallery__like ${isLIked && "gallery__like_active"}`; // переменная уйдет в `className`сердечка
 
   function handleClick() {
     onCardClick(card);
