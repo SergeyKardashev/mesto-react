@@ -12,6 +12,11 @@ function EditAvatarPopup(props) {
     onUpdateAvatar({ avatar: avatarRef.current.value }); // использую реф для получения значения инпута
   }
 
+  // ощищаю форму при открытии
+  React.useEffect(() => {
+    avatarRef.current.value = "";
+  }, [isOpen]);
+
   return (
     <PopupWithForm
       name="avatar-form"
@@ -20,21 +25,18 @@ function EditAvatarPopup(props) {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonLabel="Сохранить"
-      children={
-        <>
-          <input
-            className="popup__input popup__input_type_avatar"
-            id="avatar"
-            ref={avatarRef}
-            name="avatar"
-            type="url"
-            placeholder="Ссылка на изображение"
-            required
-          />
-          <span className="avatar-input-error popup__error"></span>
-        </>
-      }
-    />
+    >
+      <input
+        className="popup__input popup__input_type_avatar"
+        id="avatar"
+        ref={avatarRef}
+        name="avatar"
+        type="url"
+        placeholder="Ссылка на изображение"
+        required
+      />
+      <span className="avatar-input-error popup__error"></span>
+    </PopupWithForm>
   );
 }
 
