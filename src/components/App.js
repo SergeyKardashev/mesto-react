@@ -33,12 +33,6 @@ function App() {
       });
   }, []);
 
-  React.useEffect(() => {
-    api.getUserInfo().then((userInfo) => {
-      setCurrentUser(userInfo);
-    });
-  }, []);
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
